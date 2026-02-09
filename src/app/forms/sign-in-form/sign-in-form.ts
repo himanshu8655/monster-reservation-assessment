@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Output, signal } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Dialog } from '../../shared/dialog/dialog';
 import { UtilityService } from '../../services/utility-service';
+import { MatProgressSpinner } from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-sign-in-form',
@@ -25,7 +26,8 @@ import { UtilityService } from '../../services/utility-service';
     MatButtonModule,
     MatIconModule,
     PasswordInput,
-  ],
+    MatProgressSpinner
+],
   templateUrl: './sign-in-form.html',
   styleUrl: './sign-in-form.css',
 })
@@ -42,6 +44,7 @@ export class SignInForm {
     private router: Router,
     private dialog: MatDialog,
     private utilityService: UtilityService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.signInForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -61,15 +64,18 @@ export class SignInForm {
     }
     const email = this.signInForm.get('email')?.value;
     const pwd = this.signInForm.get('password')?.value;
-
+    this.isLoading = true;
+    this.cdr.detectChanges();
     this.authService.login(email, pwd).then(
       (data) => {
         this.isLoading = false;
+        this.cdr.detectChanges();
         this.router.navigate(['/home']);
         this.utilityService.resetForm(this.signInForm);
       },
       (err) => {
         this.isLoading = false;
+        this.cdr.detectChanges();
         this.dialog.open(Dialog, {
           data: this.utilityService.getdialogDataObject('Login Failed', 'Incorrect Email or Password!'),
         });
