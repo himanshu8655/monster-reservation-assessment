@@ -1,0 +1,23 @@
+<div class="main-container">
+  <div class="row-alignment" [class.signin-active]="isSignUp">
+
+    <div class="col-container primary-bg panel panel-left">
+      <div class="flex-column">
+        <p class="title">Monster Reservations Group</p>
+        <p class="sub-title">Enter your personal details and make a reservation. </p>
+      </div>
+    </div>
+
+    <div class="col-container primary-bg2 panel panel-right">
+      <div class="form-card">
+        @if(isSignUp){
+        <app-sign-up-form (toggleSignUpPage)="onFormChangeEvent($event)" />
+        }
+        @if(!isSignUp){
+        <app-sign-in-form (toggleSignUpPage)="onFormChangeEvent($event)" />
+        }
+
+      </div>
+    </div>
+  </div>
+</div>

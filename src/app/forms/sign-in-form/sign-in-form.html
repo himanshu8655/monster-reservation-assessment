@@ -1,0 +1,22 @@
+<form [formGroup]="signInForm" (ngSubmit)="signIn()">
+  <div class="center-class">
+    <br />
+    <img src="assets/logo.png" alt="logo" width="150" />
+    <h1>Sign In</h1>
+    <br />
+    <br />
+
+    <mat-form-field class="w-100">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+      <mat-error>{{signInForm.get('email')?.hasError('required') ? "Email is required" : "Invalid email format"}}</mat-error>
+    </mat-form-field>
+    <app-password-input formControlName="password" />
+    <br />
+    <button matButton="filled" type="submit" [disabled]="!signInForm.valid">LOGIN</button>
+    <br />
+    <p class="signup-text">Don't have an account?
+      <span class="toggle-btn-class" (click)="toggleSignUpPage.emit(true)">Sign Up</span>
+    </p>
+  </div>
+</form>

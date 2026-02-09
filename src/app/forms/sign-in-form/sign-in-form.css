@@ -1,0 +1,16 @@
+.center-class{
+    width: 100%;
+    justify-content:center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.toggle-btn-class{
+    color: var(--mat-button-filled-container-color,var(--mat-sys-primary));
+    text-decoration: underline;
+    font-weight: 500;
+}
+.mat-error {
+    margin-bottom: 100px;
+}
